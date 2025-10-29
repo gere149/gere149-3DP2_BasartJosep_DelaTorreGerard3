@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &286227637061538244
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 97707543099347845, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -14.014985
+      objectReference: {fileID: 0}
+    - target: {fileID: 97707543099347845, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 97707543099347845, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 97707543099347845, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 97707543099347845, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 97707543099347845, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 97707543099347845, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 97707543099347845, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 97707543099347845, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 97707543099347845, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 476166064270216261, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8600000, guid: 4aaf9f8db2e039c459ca3140d7a83c73, type: 2}
+    - target: {fileID: 1907973715099035963, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: m_Name
+      value: OrangePortal
+      objectReference: {fileID: 0}
+    - target: {fileID: 4945514534980132509, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 65309c8046e6f694eb0bfb0af65dcd10, type: 2}
+    - target: {fileID: 9174059369229284878, guid: 6876470915818454293389bbf601bfc6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 007a5db1a2d844c48a81fd6bb38d9d9a, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6876470915818454293389bbf601bfc6, type: 3}
