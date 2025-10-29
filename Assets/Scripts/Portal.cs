@@ -21,7 +21,7 @@ public class Portal : MonoBehaviour
         m_MirrorPortal.m_Camera.transform.position = m_MirrorPortal.transform.TransformPoint(l_LocalPosition);
 
         Vector3 l_WorldForward = Camera.main.transform.forward;
-        Vector3 l_LocalForward = m_OhterPortalTransform.InverseTransformDirection(l_WorldPosition);
+        Vector3 l_LocalForward = m_OhterPortalTransform.InverseTransformDirection(l_WorldForward);
         m_MirrorPortal.m_Camera.transform.forward = m_MirrorPortal.transform.TransformDirection(l_LocalForward);
 
         float l_DistanceToPortal=Vector3.Distance(m_MirrorPortal.transform.position,m_MirrorPortal.m_Camera.transform.position);

@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
     public float m_CooldownBetweenShots = 0.2f;
     private float m_ShootTimer = 0f;
     public float m_ReloadTime = 2f;
-    private bool m_IsReloading = false;
     private bool m_CanShoot = true;
 
 
@@ -159,8 +158,8 @@ public class PlayerController : MonoBehaviour
         else if (m_VerticalSpeed > 0.0f && (l_CollisionFlags & CollisionFlags.Above) != 0) //si estyoy subiendo y colision con un techo  
             m_VerticalSpeed = 0.0f;
 
-        if (CanShoot() && Input.GetMouseButtonDown(m_BlueShootButton))
-            Shoot(m_BluePortals);
+        /*if (CanShoot() && Input.GetMouseButtonDown(m_BlueShootButton))
+            Shoot(m_BluePortals);*/
     }
     bool CanShoot()
     {
@@ -194,8 +193,8 @@ public class PlayerController : MonoBehaviour
     }
     void SetShootAnimation()
     {
-        m_Animation.CrossFade(m_ShootAnimationClip.name, 0.1f);
-        m_Animation.CrossFadeQueued(m_IdleAnimationClip.name, 0.0f);
+        //m_Animation.CrossFade(m_ShootAnimationClip.name, 0.1f);
+        //m_Animation.CrossFadeQueued(m_IdleAnimationClip.name, 0.0f);
     }
     public void AddAmmo(int Ammo)
     {
@@ -227,15 +226,15 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 l_NextPosition = transform.position + m_MovementDirection * m_PortalDistance;
         Vector3 l_localPosition= _Portal.m_OhterPortalTransform.InverseTransformPoint(l_NextPosition);
-        Vector3 l_WorldPosition= _Portal.m_MirrorPortal.transform.TransformDirection(l_NextPosition);
+        Vector3 l_WorldPosition= _Portal.m_MirrorPortal.transform.TransformPoint(l_localPosition);
 
         Vector3 l_WorldForward=transform.forward;
-        Vector3 l_LocalForward=_Portal.m_OhterPortalTransform.InverseTransformDirection(l_WorldPosition);
+        Vector3 l_LocalForward=_Portal.m_OhterPortalTransform.InverseTransformDirection(l_WorldForward);
         l_WorldForward=_Portal.m_MirrorPortal.transform.TransformDirection(l_LocalForward);
 
         m_CharacterController.enabled = false;
         transform.position = l_WorldPosition;
-        transform.rotation = Quaternion.LookRotation(l_WorldForward, l_LocalForward);
+        transform.rotation = Quaternion.LookRotation(l_WorldForward);
         m_Yaw=transform.rotation.eulerAngles.y;
         m_CharacterController.enabled = true;
     }
