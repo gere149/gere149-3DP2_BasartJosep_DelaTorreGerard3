@@ -9,9 +9,10 @@ public class Portal : MonoBehaviour
     public float m_NearCameraOffset = 0.5f;
     public List<Transform> m_ValidPositions;
 
+    [Header("Validation")]
     public float m_ValidDistanceOffset = 0.15f;
     public LayerMask m_ValidPortalLayerMask;
-    public float m_MaxAnglePermited = 5.0f;
+    public float m_MaxAnglePermitted = 5.0f;
 
     public void LateUpdate()
     {
@@ -44,16 +45,18 @@ public class Portal : MonoBehaviour
             //l_Direction.Normalize();
             l_Direction /= l_Distance;
             Ray l_Ray = new Ray(l_CameraPosition, l_Direction);
-            if(Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, l_Distance+m_ValidDistanceOffset, m_ValidPortalLayerMask.value))
+            if(Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, l_Distance+m_ValidDistanceOffset, m_ValidPortalLayerMask.value, QueryTriggerInteraction.Ignore))
             {
                 if (l_RaycastHit.collider.CompareTag("DrawableWall"))
                 {
                     if(Vector3.Distance(l_RaycastHit.point, l_ValidPositions) < m_ValidDistanceOffset)
                     {
                         float l_DotAngle=Vector3.Dot(l_RaycastHit.normal, m_ValidPositions[i].forward);
-                        if (l_DotAngle > Mathf.Cos(m_MaxAnglePermited * Mathf.Deg2Rad))
+                        if (l_DotAngle < Mathf.Cos(m_MaxAnglePermitted * Mathf.Deg2Rad))
                             l_Valid = false;
                     }
+                    else
+                        l_Valid = false;
                 }
                 else
                     l_Valid = false;

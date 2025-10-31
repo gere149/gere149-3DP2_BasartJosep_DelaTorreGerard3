@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 public class PlayerController : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
     public float m_CooldownBetweenShots = 0.2f;
     private float m_ShootTimer = 0f;
     public float m_ReloadTime = 2f;
-    private bool m_CanShoot = true;
+    //private bool m_CanShoot = true;
 
 
     [Header("Input")]
@@ -50,9 +51,9 @@ public class PlayerController : MonoBehaviour
     public KeyCode m_DownKeyCode = KeyCode.S;
     public KeyCode m_JumpKeyCode = KeyCode.Space;
     public KeyCode m_RunKeyCode = KeyCode.LeftShift;
-    public KeyCode m_ReloadKeyCode = KeyCode.R;
+    public KeyCode m_GrabKeyCode = KeyCode.E;
     public int m_BlueShootButton = 0;
-    public int m_OrangeShootButton = 0;
+    public int m_OrangeShootButton = 1;
 
     [Header("Animations")]
     public Animation m_Animation;
@@ -65,11 +66,24 @@ public class PlayerController : MonoBehaviour
     [Header("Teleport")]
     public float m_PortalDistance = 1.5f;
     Vector3 m_MovementDirection;
-    public float m_MaxAngleToTeleport = 60f;
+    public float m_MaxAngleToTeleport = 60.0f;
 
     [Header("Portals")]
-    public Portal m_BluePortals;
-    public Portal m_OrangePortals;
+    public Portal m_BluePortal;
+    public Portal m_OrangePortal;
+
+    [Header("AttachedObject")]
+    public ForceMode m_ForceMode;
+    public float m_ThrowForce = 10.0f;
+    public Transform m_GripTransform;
+    Rigidbody m_AttachedObjectRigidbody;
+    bool m_AttachingObject;
+    Vector3 m_StartAttachingObjectPosition;
+    float m_AttachingCurrentTime;
+    public float m_AttachingTime = 0.4f;
+    public float m_AttachingObjectRotationDistanceLerp = 2.0f;
+    bool m_AttachedObject;
+    public LayerMask m_ValidAttachObjectsLayerMask;
 
     void Start()
     {
@@ -158,8 +172,23 @@ public class PlayerController : MonoBehaviour
         else if (m_VerticalSpeed > 0.0f && (l_CollisionFlags & CollisionFlags.Above) != 0) //si estyoy subiendo y colision con un techo  
             m_VerticalSpeed = 0.0f;
 
-        /*if (CanShoot() && Input.GetMouseButtonDown(m_BlueShootButton))
-            Shoot(m_BluePortals);*/
+        if (CanShoot())
+        {
+            if (Input.GetMouseButtonDown(m_BlueShootButton))
+                Shoot(m_BluePortal);
+            else if (Input.GetMouseButtonDown(m_BlueShootButton))
+                Shoot(m_OrangePortal);
+        }
+
+        if (CanAttachObject())
+            AttachObject();
+
+        if (m_AttachedObjectRigidbody != null)
+            UpdateAttachedObject();
+    }
+    bool CanAttachObject()
+    {
+        return true;
     }
     bool CanShoot()
     {
@@ -167,25 +196,28 @@ public class PlayerController : MonoBehaviour
     }
     void Shoot(Portal _Portal)
     {
-        m_CanShoot = false;
+        //m_CanShoot = false;
         m_ShootTimer = m_CooldownBetweenShots;
         SetShootAnimation();
         if (m_CurrentAmmo > 0)
         {
             Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
-            if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_ShootMaxDistance, _Portal.m_ValidPortalLayerMask.value))
+            if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_ShootMaxDistance, _Portal.m_ValidPortalLayerMask.value, QueryTriggerInteraction.Ignore))
             {
-                if(_Portal.IsValidPosition(l_RaycastHit.point, l_RaycastHit.normal))
+                if (l_RaycastHit.collider.CompareTag("DrawableWall"))
                 {
-                    _Portal.gameObject.SetActive(true);
+                    if (_Portal.IsValidPosition(l_RaycastHit.point, l_RaycastHit.normal))
+                    {
+                        _Portal.gameObject.SetActive(true);
+                    }
+                    else
+                        _Portal.gameObject.SetActive(false);
                 }
-                else
-                    _Portal.gameObject.SetActive(false);
             }
-            m_CurrentAmmo--;
-            UpdateAmmoHUD();
+            //m_CurrentAmmo--;
+            //UpdateAmmoHUD();
         }
-        m_CanShoot = true;
+        //m_CanShoot = true;
     }
     void SetIdleAnimation()
     {
@@ -245,5 +277,64 @@ public class PlayerController : MonoBehaviour
         transform.rotation = m_StartRotation;
         m_CharacterController.enabled = true;
         UpdateAmmoHUD();
+    }
+
+   
+    //--------------------------------------AttachObjects ------------------------------------------------
+    void AttachObject()
+    {
+        if (Input.GetKeyDown(m_GrabKeyCode))
+        {
+            Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+            if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_ShootMaxDistance, m_ValidAttachObjectsLayerMask.value, QueryTriggerInteraction.Ignore))
+            {
+                if (l_RaycastHit.collider.CompareTag("Cube"))
+                    AttachObject(l_RaycastHit.rigidbody);
+            }
+        }
+    }
+    void AttachObject(Rigidbody _Rigidbody)
+    {
+        m_AttachingObject = true;
+        m_AttachedObjectRigidbody= _Rigidbody;
+        m_StartAttachingObjectPosition=_Rigidbody.transform.position;
+        m_AttachingCurrentTime = 0.0f;
+        m_AttachedObject = false;
+    }
+    void UpdateAttachedObject()
+    {
+        if (m_AttachingObject)
+        {
+            m_AttachingCurrentTime += Time.deltaTime;
+            float l_Pct = Mathf.Min(1.0f,m_AttachingCurrentTime / m_AttachingTime);
+            Vector3 l_Position= Vector3.Lerp(m_StartAttachingObjectPosition, m_GripTransform.position, l_Pct);
+            float l_Distance = Vector3.Distance(l_Position, m_GripTransform.position);
+            float l_RotationPct = 1.0f - Mathf.Min(1.0f, l_Distance / m_AttachingObjectRotationDistanceLerp);
+            Quaternion l_Rotation = Quaternion.Lerp(transform.rotation, m_GripTransform.rotation, l_RotationPct);
+            m_AttachedObjectRigidbody.MovePosition(l_Position);
+            m_AttachedObjectRigidbody.MoveRotation(l_Rotation);
+            if (l_Pct == 1.0f)
+            {
+                m_AttachingObject = false;
+                m_AttachedObject = true; ;
+                m_AttachedObjectRigidbody.transform.SetParent(m_GripTransform);
+                m_AttachedObjectRigidbody.transform.localPosition = Vector3.zero;
+                m_AttachedObjectRigidbody.transform.localRotation=Quaternion.identity;
+                m_AttachedObjectRigidbody.isKinematic = true;
+            }
+        }
+        if (Input.GetMouseButtonDown(0))
+            ThrowObject(m_ThrowForce);
+        else if (Input.GetMouseButtonDown(1) || Input.GetKeyUp(m_GrabKeyCode))
+            ThrowObject(0.0f);
+    }
+    void ThrowObject(float Force)
+    {
+        m_AttachedObjectRigidbody.isKinematic=false;
+        m_AttachedObjectRigidbody.AddForce(m_PitchController.forward * Force, m_ForceMode);
+        m_AttachedObjectRigidbody.transform.SetParent(null);
+        m_AttachingObject = false;
+        m_AttachedObject = false;
+        m_AttachedObjectRigidbody = null;
     }
 }
