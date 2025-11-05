@@ -27,12 +27,6 @@ public class PlayerController : MonoBehaviour
     public float m_SpeedMultiplier;
     public Camera m_Camera;
 
-    [Header("Text")]
-    public Text m_AmmoText;
-    public Text m_LifeText;
-    public Text m_ShieldText;
-
-
     [Header("Shoot")]
     public float m_ShootMaxDistance = 50.0f;
     public int m_Ammo = 120;
@@ -174,13 +168,12 @@ public class PlayerController : MonoBehaviour
         else if (m_VerticalSpeed > 0.0f && (l_CollisionFlags & CollisionFlags.Above) != 0) //si estyoy subiendo y colision con un techo  
             m_VerticalSpeed = 0.0f;
 
-        if (CanShoot())
-        {
-            if (Input.GetMouseButtonDown(m_BlueShootButton))
+        
+        if (CanShoot() && Input.GetMouseButtonDown(m_BlueShootButton))
                 Shoot(m_BluePortal);
-            else if (Input.GetMouseButtonDown(m_BlueShootButton))
+        else if (CanShoot() && Input.GetMouseButtonDown(m_OrangeShootButton))
                 Shoot(m_OrangePortal);
-        }
+        
 
         if (CanAttachObject())
             AttachObject();
@@ -194,13 +187,14 @@ public class PlayerController : MonoBehaviour
     }
     bool CanShoot()
     {
-        return m_AttachedObjectRigidbody==null;
+        return m_AttachedObjectRigidbody ==null;
     }
     void Shoot(Portal _Portal)
     {
         //m_CanShoot = false;
+        Debug.Log("Shoot");
         m_ShootTimer = m_CooldownBetweenShots;
-        SetShootAnimation();
+        //SetShootAnimation();
         if (m_CurrentAmmo > 0)
         {
             Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
@@ -229,18 +223,6 @@ public class PlayerController : MonoBehaviour
     {
         //m_Animation.CrossFade(m_ShootAnimationClip.name, 0.1f);
         //m_Animation.CrossFadeQueued(m_IdleAnimationClip.name, 0.0f);
-    }
-    public void AddAmmo(int Ammo)
-    {
-        m_Ammo += Ammo;
-        if (m_Ammo > 120)
-            m_Ammo = 120;
-        UpdateAmmoHUD();
-    }
-    public void UpdateAmmoHUD()
-    {
-        if (m_AmmoText != null)
-            m_AmmoText.text = m_CurrentAmmo + " / " + m_Ammo;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -278,7 +260,6 @@ public class PlayerController : MonoBehaviour
         transform.position = m_StartPosition;
         transform.rotation = m_StartRotation;
         m_CharacterController.enabled = true;
-        UpdateAmmoHUD();
     }
 
    

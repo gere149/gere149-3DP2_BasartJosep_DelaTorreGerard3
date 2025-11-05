@@ -2024,6 +2024,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2385888314113642562, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
+      propertyPath: m_BluePortal
+      value: 
+      objectReference: {fileID: 1822422076}
+    - target: {fileID: 2385888314113642562, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
+      propertyPath: m_OrangePortal
+      value: 
+      objectReference: {fileID: 472129972}
+    - target: {fileID: 2385888314113642562, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
+      propertyPath: m_OrangeShootButton
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5017681752400747036, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
       propertyPath: m_Name
       value: PlayerController
