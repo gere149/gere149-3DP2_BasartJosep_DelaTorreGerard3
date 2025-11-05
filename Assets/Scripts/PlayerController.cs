@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static UnityEditor.Progress;
+using Cursor = UnityEngine.Cursor;
 public class PlayerController : MonoBehaviour
 {
     Vector3 m_StartPosition;
@@ -87,6 +88,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         /*m_ShootParticlesPool = new PoolElements();
         m_ShootParticlesPool.Init(25, m_ShootParticles);
         PlayerController l_Player = GameManager.GetGameManager().GetPLayer();
