@@ -4,7 +4,7 @@ public class CompanionCube : MonoBehaviour
 {
     Rigidbody m_Rigidbody;
     public float m_PortaDistance = 1.5f;
-    float m_MaxAngleToTeleport = 45.0f;
+    public float m_MaxAngleToTeleport = 25.0f;
     bool m_AttachedObject = false;
 
     private void Awake()
@@ -34,7 +34,7 @@ public class CompanionCube : MonoBehaviour
 
         Vector3 l_WorldDirection = transform.forward;
         Vector3 l_LocalDirection = _Portal.m_OhterPortalTransform.InverseTransformDirection(l_WorldDirection);
-        transform.position = _Portal.m_MirrorPortal.transform.TransformDirection(l_LocalDirection);
+        transform.forward = _Portal.m_MirrorPortal.transform.TransformDirection(l_LocalDirection);
 
         Vector3 l_LocalVelocity = _Portal.m_OhterPortalTransform.InverseTransformDirection(m_Rigidbody.linearVelocity);
         m_Rigidbody.linearVelocity=_Portal.m_MirrorPortal.transform.TransformDirection(l_LocalVelocity);

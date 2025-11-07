@@ -280,8 +280,11 @@ public class PlayerController : MonoBehaviour
     {
         m_AttachingObject = true;
         m_AttachedObjectRigidbody= _Rigidbody;
-        //m_AttachedObjectRigidbody.GetComponent<CompanionCube>().SetAttachedObject(true);
-        m_StartAttachingObjectPosition=_Rigidbody.transform.position;
+        if (m_AttachedObjectRigidbody.GetComponent<CompanionCube>())
+        {
+            m_AttachedObjectRigidbody.GetComponent<CompanionCube>().SetAttachedObject(true);
+        }
+        m_StartAttachingObjectPosition =_Rigidbody.transform.position;
         m_AttachingCurrentTime = 0.0f;
         m_AttachedObject = false;
     }
@@ -307,9 +310,9 @@ public class PlayerController : MonoBehaviour
                 m_AttachedObjectRigidbody.isKinematic = true;
             }
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
             ThrowObject(m_ThrowForce);
-        else if (Input.GetMouseButtonDown(1) || Input.GetKeyUp(m_GrabKeyCode))
+        else if (Input.GetMouseButtonUp(1))
             ThrowObject(0.0f);
     }
     void ThrowObject(float Force)
@@ -319,7 +322,7 @@ public class PlayerController : MonoBehaviour
         m_AttachedObjectRigidbody.transform.SetParent(null);
         m_AttachingObject = false;
         m_AttachedObject = false;
-        //m_AttachedObjectRigidbody.GetComponent<CompanionCube>().SetAttachedObject(false);
+        m_AttachedObjectRigidbody.GetComponent<CompanionCube>().SetAttachedObject(false);
         m_AttachedObjectRigidbody = null;
     }
 }
