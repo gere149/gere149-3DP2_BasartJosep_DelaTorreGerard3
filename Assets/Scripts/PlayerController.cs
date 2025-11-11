@@ -82,9 +82,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        /*m_ShootParticlesPool = new PoolElements();
-        m_ShootParticlesPool.Init(25, m_ShootParticles);
+        //m_ShootParticlesPool = new PoolElements();
+        //m_ShootParticlesPool.Init(25, m_ShootParticles);
         PlayerController l_Player = GameManager.GetGameManager().GetPLayer();
         if (l_Player != null)
         {
@@ -102,10 +101,7 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         GameManager.GetGameManager().SetPlayer(this);
         Cursor.lockState = CursorLockMode.Locked;
-        SetIdleAnimation();
-        UpdateAmmoHUD();
-        UpdateLifeHUD();
-        UpdateShieldHUD();*/
+        //SetIdleAnimation();
     }
 
     void Update()
@@ -210,10 +206,12 @@ public class PlayerController : MonoBehaviour
                         _Portal.gameObject.SetActive(false);
                 }
             }
-            //m_CurrentAmmo--;
-            //UpdateAmmoHUD();
         }
         //m_CanShoot = true;
+    }
+    public void Kill()
+    {
+        GameManager.GetGameManager().RestartLevel();
     }
     void SetIdleAnimation()
     {
@@ -232,6 +230,8 @@ public class PlayerController : MonoBehaviour
             if(CanTeleport(l_Portal))
                 Teleport(other.GetComponent<Portal>());
         }
+        else if (other.CompareTag("DeadZone"))
+            Kill();
     }
     bool CanTeleport(Portal _Portal)
     {
@@ -272,6 +272,8 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_ShootMaxDistance, m_ValidAttachObjectsLayerMask.value, QueryTriggerInteraction.Ignore))
             {
                 if (l_RaycastHit.collider.CompareTag("Cube"))
+                    AttachObject(l_RaycastHit.rigidbody);
+                else if (l_RaycastHit.collider.CompareTag("Turret"))
                     AttachObject(l_RaycastHit.rigidbody);
             }
         }

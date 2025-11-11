@@ -1675,6 +1675,37 @@ Transform:
   - {fileID: 792940722}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &751841165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 751841166}
+  m_Layer: 0
+  m_Name: DestroyObjects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &751841166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751841165}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2090187148}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &786708752
 GameObject:
   m_ObjectHideFlags: 0
@@ -4190,6 +4221,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5260996040345677648, guid: a0955e4e9b25f3046a8d47e308c9afd7, type: 3}
   m_PrefabInstance: {fileID: 2075899610}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2090187147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2090187148}
+  - component: {fileID: 2090187149}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2090187148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090187147}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.24576, y: 0.86931, z: -7.05575}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 751841166}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2090187149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090187147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c59b89e31758926448088106c90a08da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  m_DestroyObjects: {fileID: 751841166}
 --- !u!1 &1954579051690290 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6061136273553035130, guid: beae68e90e0995f45b30d4928da2c3e9, type: 3}
@@ -4513,6 +4590,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret
       objectReference: {fileID: 0}
+    - target: {fileID: 547071766965227067, guid: fbde6da1592a1df49bf21314549ae21a, type: 3}
+      propertyPath: m_TagString
+      value: Turret
+      objectReference: {fileID: 0}
     - target: {fileID: 5332644663115505520, guid: fbde6da1592a1df49bf21314549ae21a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.387
@@ -4584,15 +4665,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5294578686555552114, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 33.8
+      value: -9.76
       objectReference: {fileID: 0}
     - target: {fileID: 5294578686555552114, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.6
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 5294578686555552114, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -41.2
+      value: -5.26
       objectReference: {fileID: 0}
     - target: {fileID: 5294578686555552114, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4709,3 +4790,4 @@ SceneRoots:
   - {fileID: 471803788}
   - {fileID: 5084262997419755386}
   - {fileID: 1486908245}
+  - {fileID: 2090187148}

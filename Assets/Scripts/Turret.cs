@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Turret : MonoBehaviour
@@ -6,6 +7,7 @@ public class Turret : MonoBehaviour
     public float m_MaxDistance = 50.0f;
     public LayerMask m_LayerMask;
     public float m_MaxAlifeAngle = 15.0f;
+    bool m_AttachedObject = false;
 
     private void Update()
     {
@@ -22,9 +24,26 @@ public class Turret : MonoBehaviour
                 l_Distance = l_RaycastHit.distance;
                 if (l_RaycastHit.collider.CompareTag("RefractionCube"))
                     l_RaycastHit.collider.GetComponent<RefractionCube>().Reflect();
+                else if (l_RaycastHit.collider.CompareTag("Player"))
+                {
+                    PlayerController playerController = l_RaycastHit.collider.GetComponent<PlayerController>();
+                    if (playerController != null)
+                        playerController.Kill();
+                }
+                else if (l_RaycastHit.collider.CompareTag("Turret"))
+                    KillTurret(l_RaycastHit.collider.gameObject);
+
             }
             Vector3 l_Position = new Vector3(0.0f, 0.0f, l_Distance);
             m_LineRenderer.SetPosition(1, l_Position);
         }
+    }
+    private void KillTurret(GameObject _Turret)
+    {
+        _Turret.SetActive(false);
+    }
+    public void SetAttachedObject(bool AttachedObject)
+    {
+        m_AttachedObject = AttachedObject;
     }
 }
