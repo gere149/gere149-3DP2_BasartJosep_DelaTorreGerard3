@@ -2899,6 +2899,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5260996040345677648, guid: a0955e4e9b25f3046a8d47e308c9afd7, type: 3}
   m_PrefabInstance: {fileID: 1276916491}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1314182788 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 190209991794475585, guid: 23572694588f9644aa1b6b29997de098, type: 3}
+  m_PrefabInstance: {fileID: 5295351669470594043}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1329248205
 GameObject:
   m_ObjectHideFlags: 0
@@ -3731,6 +3736,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0769cc3a55c77d46bf1b4565a0adae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Portal
+--- !u!4 &1822422077 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 97707543099347845, guid: 6876470915818454293389bbf601bfc6, type: 3}
+  m_PrefabInstance: {fileID: 5899502003462236111}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1900007267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4656,9 +4666,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 472129972}
     - target: {fileID: 2385888314113642562, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
+      propertyPath: m_PortalTransform
+      value: 
+      objectReference: {fileID: 1822422077}
+    - target: {fileID: 2385888314113642562, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
       propertyPath: m_OrangeShootButton
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2385888314113642562, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
+      propertyPath: m_BluePortalTransform
+      value: 
+      objectReference: {fileID: 1822422077}
+    - target: {fileID: 2385888314113642562, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
+      propertyPath: m_OrangePortalTransform
+      value: 
+      objectReference: {fileID: 1314182788}
     - target: {fileID: 5017681752400747036, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
       propertyPath: m_Name
       value: PlayerController

@@ -29,13 +29,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Shoot")]
     public float m_ShootMaxDistance = 50.0f;
-    public int m_Ammo = 120;
-    public int m_TotalMaxAmmo = 120;
-    public int m_LoaderSize = 12;
-    public int m_CurrentAmmo = 12;
     public float m_CooldownBetweenShots = 0.2f;
     private float m_ShootTimer = 0f;
-    public float m_ReloadTime = 2f;
     //private bool m_CanShoot = true;
 
 
@@ -79,6 +74,17 @@ public class PlayerController : MonoBehaviour
     public float m_AttachingObjectRotationDistanceLerp = 2.0f;
     bool m_AttachedObject;
     public LayerMask m_ValidAttachObjectsLayerMask;
+
+
+    [Header("Portal Preview and Scale")]
+    public Transform m_BluePortalTransform;
+    public Transform m_OrangePortalTransform;
+    private Transform m_CurrentPreviewPortal = null;
+    private bool m_IsPreviewingPortal = false;
+
+    private float[] m_PortalScales = new float[] { 0.5f, 1f, 2f };
+    private int m_CurrentScale = 1;
+
 
     void Start()
     {
@@ -164,6 +170,33 @@ public class PlayerController : MonoBehaviour
         else if (m_VerticalSpeed > 0.0f && (l_CollisionFlags & CollisionFlags.Above) != 0) //si estyoy subiendo y colision con un techo  
             m_VerticalSpeed = 0.0f;
 
+        /*if (Input.GetMouseButton(0))
+        {
+            StartPreviewPortal(m_BluePortalTransform);
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            StartPreviewPortal(m_BluePortalTransform);
+        }*/
+
+        if (m_BluePortalTransform.gameObject.activeSelf || m_OrangePortalTransform.gameObject.activeSelf)
+        {
+            float scroll = Input.mouseScrollDelta.y;
+            if(scroll > 0f)
+            {
+                m_CurrentScale = (m_CurrentScale + 1) % m_PortalScales.Length;
+                m_BluePortalTransform.localScale = Vector3.one * m_PortalScales[m_CurrentScale];
+                m_OrangePortalTransform.localScale = Vector3.one * m_PortalScales[m_CurrentScale];
+            }
+            else if (scroll < 0f)
+            {
+                m_CurrentScale--;
+                if (m_CurrentScale < 0)
+                    m_CurrentScale = m_PortalScales.Length - 1;
+                m_BluePortalTransform.localScale = Vector3.one * m_PortalScales[m_CurrentScale];
+                m_OrangePortalTransform.localScale = Vector3.one * m_PortalScales[m_CurrentScale];
+            }
+        }
         
         if (CanShoot() && Input.GetMouseButtonDown(m_BlueShootButton))
                 Shoot(m_BluePortal);
@@ -176,6 +209,16 @@ public class PlayerController : MonoBehaviour
 
         if (m_AttachedObjectRigidbody != null)
             UpdateAttachedObject();
+    }
+
+    void StartPreviewPortal(Transform _Preview)
+    {
+        if (!m_IsPreviewingPortal)
+        {
+            m_IsPreviewingPortal = true;
+            m_CurrentPreviewPortal = _Preview;
+            m_CurrentPreviewPortal.gameObject.SetActive(true);
+        }
     }
     bool CanAttachObject()
     {
@@ -191,20 +234,17 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Shoot");
         m_ShootTimer = m_CooldownBetweenShots;
         //SetShootAnimation();
-        if (m_CurrentAmmo > 0)
+        Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+        if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_ShootMaxDistance, _Portal.m_ValidPortalLayerMask.value, QueryTriggerInteraction.Ignore))
         {
-            Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
-            if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_ShootMaxDistance, _Portal.m_ValidPortalLayerMask.value, QueryTriggerInteraction.Ignore))
+            if (l_RaycastHit.collider.CompareTag("DrawableWall"))
             {
-                if (l_RaycastHit.collider.CompareTag("DrawableWall"))
+                if (_Portal.IsValidPosition(l_RaycastHit.point, l_RaycastHit.normal))
                 {
-                    if (_Portal.IsValidPosition(l_RaycastHit.point, l_RaycastHit.normal))
-                    {
-                        _Portal.gameObject.SetActive(true);
-                    }
-                    else
-                        _Portal.gameObject.SetActive(false);
+                    _Portal.gameObject.SetActive(true);
                 }
+                else
+                    _Portal.gameObject.SetActive(false);
             }
         }
         //m_CanShoot = true;
