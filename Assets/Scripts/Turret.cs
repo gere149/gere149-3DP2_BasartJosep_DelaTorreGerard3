@@ -38,7 +38,7 @@ public class Turret : MonoBehaviour
             m_LineRenderer.SetPosition(1, l_Position);
         }
     }
-    private void KillTurret(GameObject _Turret)
+    public void KillTurret(GameObject _Turret)
     {
         _Turret.SetActive(false);
     }

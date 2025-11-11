@@ -70,7 +70,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100004, guid: fbdea4cfb94761d40af0b9ece19ad2cf, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 881785279690089013}
+      addedObject: {fileID: 950621062193429354}
+    - targetCorrespondingSourceObject: {fileID: 100004, guid: fbdea4cfb94761d40af0b9ece19ad2cf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8477468100554019977}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: fbdea4cfb94761d40af0b9ece19ad2cf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7535367869801089602}
@@ -83,7 +86,25 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100004, guid: fbdea4cfb94761d40af0b9ece19ad2cf, type: 3}
   m_PrefabInstance: {fileID: 1436682945700562799}
   m_PrefabAsset: {fileID: 0}
---- !u!111 &881785279690089013
+--- !u!114 &950621062193429354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436682945700659659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de55683b697527c4bba0d86cd79a89fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PortalGate
+  m_Animation: {fileID: 0}
+  m_OpenAnimation: {fileID: 7400000, guid: 875db81674f2d0743b0e046a19246092, type: 2}
+  m_CloseAnimation: {fileID: 7400000, guid: 65f4864528053764189d9fac85384272, type: 2}
+  m_OpenedAnimationClip: {fileID: 7400000, guid: a1a6827a870018e42ad3c6926f20bcfb, type: 2}
+  m_ClosedAnimaionClip: {fileID: 7400000, guid: bf16dbc48d100dd429d5690a11b529cc, type: 2}
+  m_IsOpened: 0
+--- !u!111 &8477468100554019977
 Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,12 +113,9 @@ Animation:
   m_GameObject: {fileID: 1436682945700659659}
   m_Enabled: 1
   serializedVersion: 4
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 7400000, guid: 875db81674f2d0743b0e046a19246092, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: bf16dbc48d100dd429d5690a11b529cc, type: 2}
   - {fileID: 7400000, guid: 875db81674f2d0743b0e046a19246092, type: 2}
-  - {fileID: 7400000, guid: 65f4864528053764189d9fac85384272, type: 2}
-  - {fileID: 7400000, guid: bf16dbc48d100dd429d5690a11b529cc, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0

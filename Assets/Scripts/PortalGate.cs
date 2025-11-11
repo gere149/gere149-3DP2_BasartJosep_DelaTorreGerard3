@@ -7,7 +7,7 @@ public class PortalGate : MonoBehaviour
     public Animation m_Animation;
     public AnimationClip m_OpenAnimation;
     public AnimationClip m_CloseAnimation;
-    public AnimationClip m_OpenAnimationClip;
+    public AnimationClip m_OpenedAnimationClip;
     public AnimationClip m_ClosedAnimaionClip;
 
     public bool m_IsOpened;
@@ -32,7 +32,7 @@ public class PortalGate : MonoBehaviour
     void SetOpenedState()
     {
         m_State = TState.OPENED;
-        m_Animation.Play(m_OpenAnimationClip.name);
+        m_Animation.Play(m_OpenedAnimationClip.name);
     }
     void SetClosedState()
     {
@@ -44,8 +44,17 @@ public class PortalGate : MonoBehaviour
         if (m_State == TState.CLOSED)
         {
             m_State=TState.OPEN;
-            m_Animation.Play(m_OpenAnimationClip.name);
-            StartCoroutine(SetState(m_ClosedAnimaionClip.length, TState.CLOSED));
+            m_Animation.Play(m_OpenAnimation.name);
+            StartCoroutine(SetState(m_OpenAnimation.length, TState.OPENED));
+        }
+    }
+    public void Close()
+    {
+        if (m_State == TState.OPENED)
+        {
+            m_State = TState.CLOSE;
+            m_Animation.Play(m_CloseAnimation.name);
+            StartCoroutine(SetState(m_CloseAnimation.length, TState.CLOSED));
         }
     }
     IEnumerator SetState(float AnimationTime, TState State)
