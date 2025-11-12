@@ -618,6 +618,11 @@ Transform:
   - {fileID: 390330245}
   m_Father: {fileID: 506736988}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &344336741 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7837613191746592577, guid: 23572694588f9644aa1b6b29997de098, type: 3}
+  m_PrefabInstance: {fileID: 5295351669470594043}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &355277931
 GameObject:
   m_ObjectHideFlags: 0
@@ -6136,6 +6141,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 31.282, z: 0}
+--- !u!1 &2067082403 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8015326692128804485, guid: 6876470915818454293389bbf601bfc6, type: 3}
+  m_PrefabInstance: {fileID: 5899502003462236111}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2075899610
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6985,9 +6995,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 472129972}
     - target: {fileID: 2385888314113642562, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
+      propertyPath: m_FrameBluePortal
+      value: 
+      objectReference: {fileID: 2067082403}
+    - target: {fileID: 2385888314113642562, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
       propertyPath: m_PortalTransform
       value: 
       objectReference: {fileID: 1822422077}
+    - target: {fileID: 2385888314113642562, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
+      propertyPath: m_FrameOrangePortal
+      value: 
+      objectReference: {fileID: 344336741}
     - target: {fileID: 2385888314113642562, guid: 0f08f5f2d3ab05e4284135f8406f059e, type: 3}
       propertyPath: m_OrangeShootButton
       value: 1

@@ -3,6 +3,7 @@ using UnityEngine;
 public class CompanionCube : MonoBehaviour
 {
     Rigidbody m_Rigidbody;
+    Vector3 m_Scale;
     public float m_PortaDistance = 1.5f;
     public float m_MaxAngleToTeleport = 25.0f;
     bool m_AttachedObject = false;
@@ -10,6 +11,7 @@ public class CompanionCube : MonoBehaviour
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+        m_Scale = transform.localScale;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -38,8 +40,9 @@ public class CompanionCube : MonoBehaviour
 
         Vector3 l_LocalVelocity = _Portal.m_OhterPortalTransform.InverseTransformDirection(m_Rigidbody.linearVelocity);
         m_Rigidbody.linearVelocity=_Portal.m_MirrorPortal.transform.TransformDirection(l_LocalVelocity);
+
         float l_Sclae=_Portal.m_MirrorPortal.transform.localScale.x/_Portal.transform.localScale.x;
-        m_Rigidbody.transform.localScale=Vector3.one*l_Sclae*m_Rigidbody.transform.localScale.x;
+        transform.localScale = m_Scale * l_Sclae;
     }
 
     public void SetAttachedObject(bool AttachedObject)

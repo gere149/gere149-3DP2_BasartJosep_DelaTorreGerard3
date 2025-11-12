@@ -61,6 +61,8 @@ public class PlayerController : MonoBehaviour
     [Header("Portals")]
     public Portal m_BluePortal;
     public Portal m_OrangePortal;
+    public Portal m_FrameBluePortal;
+    public Portal m_FrameOrangePortal;
 
     [Header("AttachedObject")]
     public ForceMode m_ForceMode;
@@ -170,39 +172,35 @@ public class PlayerController : MonoBehaviour
         else if (m_VerticalSpeed > 0.0f && (l_CollisionFlags & CollisionFlags.Above) != 0) //si estyoy subiendo y colision con un techo  
             m_VerticalSpeed = 0.0f;
 
-        /*if (Input.GetMouseButton(0))
-        {
-            StartPreviewPortal(m_BluePortalTransform);
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            StartPreviewPortal(m_BluePortalTransform);
-        }*/
-
         if (m_BluePortalTransform.gameObject.activeSelf || m_OrangePortalTransform.gameObject.activeSelf)
         {
             float scroll = Input.mouseScrollDelta.y;
             if(scroll > 0f)
             {
                 m_CurrentScale = (m_CurrentScale + 1) % m_PortalScales.Length;
-                m_BluePortalTransform.localScale = Vector3.one * m_PortalScales[m_CurrentScale];
-                m_OrangePortalTransform.localScale = Vector3.one * m_PortalScales[m_CurrentScale];
             }
             else if (scroll < 0f)
             {
                 m_CurrentScale--;
                 if (m_CurrentScale < 0)
                     m_CurrentScale = m_PortalScales.Length - 1;
-                m_BluePortalTransform.localScale = Vector3.one * m_PortalScales[m_CurrentScale];
-                m_OrangePortalTransform.localScale = Vector3.one * m_PortalScales[m_CurrentScale];
             }
         }
-        
-        if (CanShoot() && Input.GetMouseButtonDown(m_BlueShootButton))
+
+        float l_NewScale = m_PortalScales[m_CurrentScale];
+        m_BluePortalTransform.localScale = Vector3.one * l_NewScale;
+        m_OrangePortalTransform.localScale = Vector3.one * l_NewScale;
+
+        if (CanShoot() && Input.GetMouseButton(m_BlueShootButton))
                 Shoot(m_BluePortal);
-        else if (CanShoot() && Input.GetMouseButtonDown(m_OrangeShootButton))
+        else if (Input.GetMouseButtonUp(m_BlueShootButton))
+            Shoot(m_BluePortal);
+
+        if (CanShoot() && Input.GetMouseButton(m_OrangeShootButton))
                 Shoot(m_OrangePortal);
-        
+        else if (Input.GetMouseButtonUp(m_OrangeShootButton))
+            Shoot(m_OrangePortal);
+
 
         if (CanAttachObject())
             AttachObject();
@@ -211,15 +209,6 @@ public class PlayerController : MonoBehaviour
             UpdateAttachedObject();
     }
 
-    void StartPreviewPortal(Transform _Preview)
-    {
-        if (!m_IsPreviewingPortal)
-        {
-            m_IsPreviewingPortal = true;
-            m_CurrentPreviewPortal = _Preview;
-            m_CurrentPreviewPortal.gameObject.SetActive(true);
-        }
-    }
     bool CanAttachObject()
     {
         return true;
