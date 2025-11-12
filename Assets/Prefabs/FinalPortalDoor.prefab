@@ -64,6 +64,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: fbdea4cfb94761d40af0b9ece19ad2cf, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2f9166ec71c55a34c9d5bdedf184b84a, type: 2}
+    - target: {fileID: 2300002, guid: fbdea4cfb94761d40af0b9ece19ad2cf, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 01acac35118f4df47bf3b2cd1163d471, type: 2}
+    - target: {fileID: 2300006, guid: fbdea4cfb94761d40af0b9ece19ad2cf, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6257980dbbf3d394d93e1ff137e09f12, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -98,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de55683b697527c4bba0d86cd79a89fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortalGate
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 8477468100554019977}
   m_OpenAnimation: {fileID: 7400000, guid: 875db81674f2d0743b0e046a19246092, type: 2}
   m_CloseAnimation: {fileID: 7400000, guid: 65f4864528053764189d9fac85384272, type: 2}
   m_OpenedAnimationClip: {fileID: 7400000, guid: a1a6827a870018e42ad3c6926f20bcfb, type: 2}
@@ -113,9 +125,12 @@ Animation:
   m_GameObject: {fileID: 1436682945700659659}
   m_Enabled: 1
   serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: 875db81674f2d0743b0e046a19246092, type: 2}
+  m_Animation: {fileID: 0}
   m_Animations:
   - {fileID: 7400000, guid: 875db81674f2d0743b0e046a19246092, type: 2}
+  - {fileID: 7400000, guid: 65f4864528053764189d9fac85384272, type: 2}
+  - {fileID: 7400000, guid: a1a6827a870018e42ad3c6926f20bcfb, type: 2}
+  - {fileID: 7400000, guid: bf16dbc48d100dd429d5690a11b529cc, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0

@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("AttachedObject")]
     public ForceMode m_ForceMode;
+    public float m_AttachMaxDistance = 10.0f;
     public float m_ThrowForce = 10.0f;
     public Transform m_GripTransform;
     Rigidbody m_AttachedObjectRigidbody;
@@ -300,7 +301,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(m_GrabKeyCode))
         {
             Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
-            if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_ShootMaxDistance, m_ValidAttachObjectsLayerMask.value, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_AttachMaxDistance, m_ValidAttachObjectsLayerMask.value, QueryTriggerInteraction.Ignore))
             {
                 if (l_RaycastHit.collider.CompareTag("Cube"))
                     AttachObject(l_RaycastHit.rigidbody);
