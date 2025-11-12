@@ -41,8 +41,8 @@ public class CompanionCube : MonoBehaviour
         Vector3 l_LocalVelocity = _Portal.m_OhterPortalTransform.InverseTransformDirection(m_Rigidbody.linearVelocity);
         m_Rigidbody.linearVelocity=_Portal.m_MirrorPortal.transform.TransformDirection(l_LocalVelocity);
 
-        float l_Sclae=_Portal.m_MirrorPortal.transform.localScale.x/_Portal.transform.localScale.x;
-        transform.localScale = m_Scale * l_Sclae;
+        float l_Scale=_Portal.m_MirrorPortal.transform.localScale.x/_Portal.transform.localScale.x; 
+        transform.localScale = transform.localScale * l_Scale * _Portal.transform.localScale.x;
     }
 
     public void SetAttachedObject(bool AttachedObject)

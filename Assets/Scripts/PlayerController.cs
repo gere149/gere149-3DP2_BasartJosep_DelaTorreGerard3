@@ -81,8 +81,6 @@ public class PlayerController : MonoBehaviour
     [Header("Portal Preview and Scale")]
     public Transform m_BluePortalTransform;
     public Transform m_OrangePortalTransform;
-    private Transform m_CurrentPreviewPortal = null;
-    private bool m_IsPreviewingPortal = false;
 
     private float[] m_PortalScales = new float[] { 0.5f, 1f, 2f };
     private int m_CurrentScale = 1;
@@ -209,8 +207,8 @@ public class PlayerController : MonoBehaviour
             }
 
             float l_NewScale = m_PortalScales[m_CurrentScale];
-            m_BluePortalTransform.localScale = Vector3.one * l_NewScale;
-            m_OrangePortalTransform.localScale = Vector3.one * l_NewScale;
+            _Portal.transform.localScale = Vector3.one * l_NewScale;
+            _Portal.m_MirrorPortal.transform.localScale = Vector3.one * l_NewScale;
         }
     }
     bool CanAttachObject()
