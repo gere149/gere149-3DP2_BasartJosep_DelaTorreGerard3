@@ -172,24 +172,8 @@ public class PlayerController : MonoBehaviour
         else if (m_VerticalSpeed > 0.0f && (l_CollisionFlags & CollisionFlags.Above) != 0) //si estyoy subiendo y colision con un techo  
             m_VerticalSpeed = 0.0f;
 
-        if (m_BluePortalTransform.gameObject.activeSelf || m_OrangePortalTransform.gameObject.activeSelf)
-        {
-            float scroll = Input.mouseScrollDelta.y;
-            if(scroll > 0f)
-            {
-                m_CurrentScale = (m_CurrentScale + 1) % m_PortalScales.Length;
-            }
-            else if (scroll < 0f)
-            {
-                m_CurrentScale--;
-                if (m_CurrentScale < 0)
-                    m_CurrentScale = m_PortalScales.Length - 1;
-            }
-        }
-
-        float l_NewScale = m_PortalScales[m_CurrentScale];
-        m_BluePortalTransform.localScale = Vector3.one * l_NewScale;
-        m_OrangePortalTransform.localScale = Vector3.one * l_NewScale;
+        PortalScale(m_BluePortal, m_BlueShootButton);
+        PortalScale(m_OrangePortal, m_OrangeShootButton);
 
         if (CanShoot() && Input.GetMouseButton(m_BlueShootButton))
                 Shoot(m_BluePortal);
@@ -208,7 +192,27 @@ public class PlayerController : MonoBehaviour
         if (m_AttachedObjectRigidbody != null)
             UpdateAttachedObject();
     }
+    void PortalScale(Portal _Portal, int _ShootButton)
+    {
+        if (Input.GetMouseButton(_ShootButton) && _Portal.gameObject.activeSelf)
+        {
+            float scroll = Input.mouseScrollDelta.y;
+            if (scroll > 0f)
+            {
+                m_CurrentScale = (m_CurrentScale + 1) % m_PortalScales.Length;
+            }
+            else if (scroll < 0f)
+            {
+                m_CurrentScale--;
+                if (m_CurrentScale < 0)
+                    m_CurrentScale = m_PortalScales.Length - 1;
+            }
 
+            float l_NewScale = m_PortalScales[m_CurrentScale];
+            m_BluePortalTransform.localScale = Vector3.one * l_NewScale;
+            m_OrangePortalTransform.localScale = Vector3.one * l_NewScale;
+        }
+    }
     bool CanAttachObject()
     {
         return true;
