@@ -1,9 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
 using Cursor = UnityEngine.Cursor;
 public class PlayerController : MonoBehaviour
 {

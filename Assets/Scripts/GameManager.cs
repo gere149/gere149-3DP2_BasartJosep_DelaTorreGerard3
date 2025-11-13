@@ -6,7 +6,15 @@ public class GameManager : MonoBehaviour
     static GameManager m_GameManager;
     PlayerController m_Player;
     public Transform m_DestroyObjects;
+    public AudioClip m_Music;
 
+    private void Start()
+    {
+        AudioSource l_AudioSource = gameObject.AddComponent<AudioSource>();
+        l_AudioSource.clip = m_Music;
+        l_AudioSource.loop = true;
+        l_AudioSource.Play();
+    }
     private void Awake()
     {
         if (m_GameManager != null)
