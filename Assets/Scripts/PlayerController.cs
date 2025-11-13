@@ -31,8 +31,6 @@ public class PlayerController : MonoBehaviour
     public float m_ShootMaxDistance = 50.0f;
     public float m_CooldownBetweenShots = 0.2f;
     private float m_ShootTimer = 0f;
-    //private bool m_CanShoot = true;
-
 
     [Header("Input")]
     public KeyCode m_LeftKeyCode = KeyCode.A;
@@ -44,11 +42,6 @@ public class PlayerController : MonoBehaviour
     public KeyCode m_GrabKeyCode = KeyCode.E;
     public int m_BlueShootButton = 0;
     public int m_OrangeShootButton = 1;
-
-    [Header("Animations")]
-    public Animation m_Animation;
-    public AnimationClip m_IdleAnimationClip;
-    public AnimationClip m_ShootAnimationClip;
 
     [Header("Debug Input")]
     public KeyCode m_DebugLockAngleKeyCode = KeyCode.I;
@@ -75,9 +68,8 @@ public class PlayerController : MonoBehaviour
     float m_AttachingCurrentTime;
     public float m_AttachingTime = 0.4f;
     public float m_AttachingObjectRotationDistanceLerp = 2.0f;
-    bool m_AttachedObject;
+    bool m_AttachedObject = false;
     public LayerMask m_ValidAttachObjectsLayerMask;
-
 
     [Header("Portal Preview and Scale")]
     public Transform m_BluePortalTransform;
@@ -89,8 +81,6 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        //m_ShootParticlesPool = new PoolElements();
-        //m_ShootParticlesPool.Init(25, m_ShootParticles);
         PlayerController l_Player = GameManager.GetGameManager().GetPLayer();
         if (l_Player != null)
         {
@@ -108,7 +98,6 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         GameManager.GetGameManager().SetPlayer(this);
         Cursor.lockState = CursorLockMode.Locked;
-        //SetIdleAnimation();
     }
 
     void Update()
@@ -171,8 +160,8 @@ public class PlayerController : MonoBehaviour
         else if (m_VerticalSpeed > 0.0f && (l_CollisionFlags & CollisionFlags.Above) != 0) //si estyoy subiendo y colision con un techo  
             m_VerticalSpeed = 0.0f;
 
-        PortalScale(m_BluePortal, m_BlueShootButton);
-        PortalScale(m_OrangePortal, m_OrangeShootButton);
+        if (Input.GetMouseButton(m_BlueShootButton)) PortalScale(m_BluePortal);
+        if (Input.GetMouseButton(m_OrangeShootButton)) PortalScale(m_OrangePortal);
 
         if (CanShoot() && Input.GetMouseButton(m_BlueShootButton))
                 Shoot(m_BluePortal);
@@ -191,26 +180,23 @@ public class PlayerController : MonoBehaviour
         if (m_AttachedObjectRigidbody != null)
             UpdateAttachedObject();
     }
-    void PortalScale(Portal _Portal, int _ShootButton)
+    void PortalScale(Portal _Portal)
     {
-        if (Input.GetMouseButton(_ShootButton) && _Portal.gameObject.activeSelf)
+        float scroll = Input.mouseScrollDelta.y; //MouseScroll preguntado en ChatGPT
+        if (scroll > 0f)
         {
-            float scroll = Input.mouseScrollDelta.y;
-            if (scroll > 0f)
-            {
-                m_CurrentScale = (m_CurrentScale + 1) % m_PortalScales.Length;
-            }
-            else if (scroll < 0f)
-            {
-                m_CurrentScale--;
-                if (m_CurrentScale < 0)
-                    m_CurrentScale = m_PortalScales.Length - 1;
-            }
-
-            float l_NewScale = m_PortalScales[m_CurrentScale];
-            _Portal.transform.localScale = Vector3.one * l_NewScale;
-            _Portal.m_MirrorPortal.transform.localScale = Vector3.one * l_NewScale;
+            m_CurrentScale = (m_CurrentScale + 1) % m_PortalScales.Length;
         }
+        else if (scroll < 0f)
+        {
+            m_CurrentScale--;
+            if (m_CurrentScale < 0)
+                m_CurrentScale = m_PortalScales.Length - 1;
+        }
+
+        float l_NewScale = m_PortalScales[m_CurrentScale];
+        _Portal.transform.localScale = Vector3.one * l_NewScale;
+        _Portal.m_MirrorPortal.transform.localScale = Vector3.one * l_NewScale;
     }
     bool CanAttachObject()
     {
@@ -222,10 +208,8 @@ public class PlayerController : MonoBehaviour
     }
     void Shoot(Portal _Portal)
     {
-        //m_CanShoot = false;
         Debug.Log("Shoot");
         m_ShootTimer = m_CooldownBetweenShots;
-        //SetShootAnimation();
         Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
         if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_ShootMaxDistance, _Portal.m_ValidPortalLayerMask.value, QueryTriggerInteraction.Ignore))
         {
@@ -239,20 +223,10 @@ public class PlayerController : MonoBehaviour
                     _Portal.gameObject.SetActive(false);
             }
         }
-        //m_CanShoot = true;
     }
     public void Kill()
     {
         GameManager.GetGameManager().RestartLevel();
-    }
-    void SetIdleAnimation()
-    {
-        m_Animation.CrossFade(m_IdleAnimationClip.name);
-    }
-    void SetShootAnimation()
-    {
-        //m_Animation.CrossFade(m_ShootAnimationClip.name, 0.1f);
-        //m_Animation.CrossFadeQueued(m_IdleAnimationClip.name, 0.0f);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -307,6 +281,8 @@ public class PlayerController : MonoBehaviour
                     AttachObject(l_RaycastHit.rigidbody);
                 else if (l_RaycastHit.collider.CompareTag("Turret"))
                     AttachObject(l_RaycastHit.rigidbody);
+                else if (l_RaycastHit.collider.CompareTag("RefractionCube"))
+                    AttachObject(l_RaycastHit.rigidbody);
             }
         }
     }
@@ -354,9 +330,9 @@ public class PlayerController : MonoBehaviour
         m_AttachedObjectRigidbody.isKinematic=false;
         m_AttachedObjectRigidbody.AddForce(m_PitchController.forward * Force, m_ForceMode);
         m_AttachedObjectRigidbody.transform.SetParent(null);
+        m_AttachedObjectRigidbody.GetComponent<CompanionCube>().SetAttachedObject(false);
         m_AttachingObject = false;
         m_AttachedObject = false;
-        m_AttachedObjectRigidbody.GetComponent<CompanionCube>().SetAttachedObject(false);
         m_AttachedObjectRigidbody = null;
     }
 }

@@ -6,9 +6,9 @@ public class PortalButton : MonoBehaviour
     public UnityEvent m_Opening;
     public UnityEvent m_Closing;
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Cube"))
+        if (other.CompareTag("Cube") || other.CompareTag("RefractionCube"))
             m_Opening.Invoke();
     }
 

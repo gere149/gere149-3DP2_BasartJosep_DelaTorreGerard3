@@ -6,6 +6,9 @@ public class RefractionCube : MonoBehaviour
     public float m_MaxDistance = 50.0f;
     public LayerMask m_LayerMask;
     bool m_IsReflectingLaser=false;
+    bool m_AttachedObject = false;
+    public Collider m_Collider;
+
 
     private void Start()
     {
@@ -51,8 +54,18 @@ public class RefractionCube : MonoBehaviour
             {
                 l_RaycastHit.collider.GetComponent<Turret>().KillTurret(l_RaycastHit.collider.gameObject);
             }
+            else if (l_RaycastHit.collider.CompareTag("Button"))
+            {
+                PortalButton portalButton = l_RaycastHit.collider.GetComponent<PortalButton>();
+                portalButton.OnTriggerEnter(m_Collider);
+            }
         }
         Vector3 l_Position = new Vector3(0.0f, 0.0f, l_Distance);
         m_Laser.SetPosition(1, l_Position);
+    }
+    
+    public void SetAttachedObject(bool AttachedObject)
+    {
+        m_AttachedObject = AttachedObject;
     }
 }

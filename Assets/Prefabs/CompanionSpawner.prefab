@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3814745876394884173}
   - component: {fileID: 8589640529339026886}
   - component: {fileID: 204238021433739302}
-  - component: {fileID: 3354134911978347716}
   m_Layer: 0
   m_Name: CompanionSpawner
   m_TagString: Untagged
@@ -113,20 +112,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3354134911978347716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1825805077408238598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f4cce16cab04484b8229907100c34be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CompanionSpawner
-  m_CompanionCubePrefab: {fileID: 6061136273553035130, guid: beae68e90e0995f45b30d4928da2c3e9, type: 3}
-  m_SpawnerTransform: {fileID: 1483443275985933094}
 --- !u!1 &6594463607753912344
 GameObject:
   m_ObjectHideFlags: 0

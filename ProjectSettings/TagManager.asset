@@ -10,6 +10,7 @@ TagManager:
   - RefractionCube
   - Turret
   - DeadZone
+  - Button
   layers:
   - Default
   - TransparentFX
